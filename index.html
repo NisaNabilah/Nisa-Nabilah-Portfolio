@@ -1,118 +1,254 @@
 <!--
-  Single-page portfolio structure: fixed navigation, modular grid sections,
-  accessible project filters/modal, contact form, and footer. Hand-edit content here.
+  Portfolio v3: static single-page job-search portfolio using vanilla HTML,
+  CSS and JavaScript. The design uses CSS-only abstract graphics; no personal
+  photos, person illustrations, headshots, avatars, or people imagery appear.
 -->
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Portfolio of Nisa Nabilah Azaddin, a data science and AI undergraduate building research-led, human-centred AI systems.">
-  <meta name="theme-color" content="#FFF4EB">
-  <title>Nisa Nabilah — Data Science & AI</title>
+  <meta name="description" content="Portfolio of Nisa Nabilah Azaddin, a Data Science and AI undergraduate building machine learning, NLP, analytics, and cloud-native ML systems.">
+  <meta name="theme-color" content="#0E141C">
+  <title>Nisa Nabilah Azaddin — Data Science & AI Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
+
   <header class="site-header">
-    <a class="brand" href="#home" aria-label="Nisa Nabilah, home"><span class="brand-mark">NN</span><span>NISA / AI</span></a>
-    <button class="menu-toggle icon-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav"><span></span><span></span></button>
-    <nav id="site-nav" class="site-nav" aria-label="Main navigation">
-      <a href="#about">About</a><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#learning">Learning</a><a href="#contact">Contact</a>
-    </nav>
-    <button class="theme-toggle icon-button" type="button" aria-label="Switch to dark mode" title="Toggle colour theme">
-      <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v3M12 19v3M4.9 4.9 7 7m10 10 2.1 2.1M2 12h3m14 0h3M4.9 19.1 7 17m10-10 2.1-2.1"/></svg>
+    <a class="brand" href="#home" aria-label="Nisa Nabilah Azaddin home">
+      <span class="brand-mark" aria-hidden="true">NN</span>
+      <span>Nisa / AI</span>
+    </a>
+    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav">
+      <span></span><span></span>
     </button>
+    <nav id="site-nav" class="site-nav" aria-label="Main navigation">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#learning">Learning</a>
+      <a href="#contact">Contact</a>
+    </nav>
   </header>
 
-  <aside class="social-rail" aria-label="Social links">
-    <a href="https://www.linkedin.com/in/nisa-nabilah-azaddin-394b0b20a/" target="_blank" rel="noreferrer" aria-label="LinkedIn">in</a>
-    <a href="https://github.com/NisaNabilah" target="_blank" rel="noreferrer" aria-label="GitHub">gh</a>
-    <a href="mailto:nisanabilahwork25@gmail.com" aria-label="Email">@</a>
-  </aside>
-
   <main id="main">
-    <section id="home" class="hero section-shell" aria-labelledby="hero-title">
-      <div class="hero-copy reveal">
-        <p class="eyebrow"><span>01</span> Data Science + Artificial Intelligence</p>
-        <h1 id="hero-title">NISA<br><span>NABILAH.</span></h1>
-        <p class="hero-lede">I turn complex data into explainable, decision-ready AI — from published deep-learning research to enterprise automation.</p>
-        <div class="button-row"><a class="button primary" href="#projects">View projects <span>↘</span></a><a class="button secondary" href="Nisa-Nabilah-Azaddin-Resume.pdf" target="_blank">View résumé</a></div>
+    <section id="home" class="hero" aria-labelledby="hero-title">
+      <div class="hero-bg" aria-hidden="true">
+        <span class="orb orb-one"></span>
+        <span class="orb orb-two"></span>
+        <span class="orb orb-three"></span>
+        <span class="particle p1"></span>
+        <span class="particle p2"></span>
+        <span class="particle p3"></span>
+        <span class="particle p4"></span>
       </div>
-      <figure class="hero-visual hero-system reveal tick-frame" role="img" aria-label="Abstract data network representing Nisa's work across artificial intelligence, research and analytics">
-        <div class="system-grid" aria-hidden="true"></div>
-        <div class="system-orbit orbit-one" aria-hidden="true"></div>
-        <div class="system-orbit orbit-two" aria-hidden="true"></div>
-        <div class="system-core" aria-hidden="true"><span>NN</span><small>AI / 26</small></div>
-        <span class="system-node node-one" aria-hidden="true"></span>
-        <span class="system-node node-two" aria-hidden="true"></span>
-        <span class="system-node node-three" aria-hidden="true"></span>
-        <span class="system-node node-four" aria-hidden="true"></span>
-        <p class="system-label label-one" aria-hidden="true">GRAPH<br>INTELLIGENCE</p>
-        <p class="system-label label-two" aria-hidden="true">HUMAN-CENTRED<br>SYSTEMS</p>
-        <div class="system-signal" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <figcaption><span>KUALA LUMPUR, MY</span><span>DATA SCIENCE + AI</span></figcaption>
-      </figure>
-      <div class="hero-stat reveal"><strong>0.9857</strong><span>AUC-PR<br>AML detection</span></div>
-      <div class="hero-stat reveal"><strong>88%</strong><span>NLP test<br>accuracy</span></div>
-      <a class="scroll-cue" href="#about">Scroll to explore <span>↓</span></a>
-    </section>
 
-    <section id="about" class="section-shell about" aria-labelledby="about-title">
-      <header class="section-heading reveal"><p class="eyebrow"><span>02</span> Profile</p><h2 id="about-title">Research depth.<br>Enterprise instinct.</h2></header>
-      <div class="about-copy reveal"><p>I’m a Data Science and AI undergraduate at IIUM with hands-on research and enterprise experience delivering machine-learning solutions. My work spans graph neural networks, NLP, document intelligence and practical workplace tools.</p><p>I care about the whole system: rigorous evaluation, useful interfaces, clear handoffs, and technology people can trust.</p><div class="micro-meta"><span>KUALA LUMPUR, MY</span><span>BSc · EXPECTED 2026</span><span>CGPA 3.40 / 4.00</span></div></div>
-      <div class="skills-grid">
-        <article class="skill-card reveal"><span class="card-no">01</span><div class="skill-icon">⌁</div><h3>AI / ML</h3><p>PyTorch, GraphSAGE, NLP, deep learning, predictive modelling and explainable AI.</p></article>
-        <article class="skill-card reveal"><span class="card-no">02</span><div class="skill-icon">▦</div><h3>Data & BI</h3><p>SQL, PySpark, BigQuery, Power BI, Excel, Looker Studio and visual analytics.</p></article>
-        <article class="skill-card reveal"><span class="card-no">03</span><div class="skill-icon">↻</div><h3>Automation</h3><p>Python bots, REST APIs, Google Sheets workflows, OCR and document intelligence.</p></article>
-        <article class="skill-card reveal"><span class="card-no">04</span><div class="skill-icon">◇</div><h3>Prototyping</h3><p>Streamlit, Vue.js, browser APIs and rapid, human-centred product experiments.</p></article>
+      <p class="corner-tag">Kuala Lumpur · Open to AI/Data roles</p>
+      <div class="hero-content reveal">
+        <p class="eyebrow">Data Science & Artificial Intelligence</p>
+        <h1 id="hero-title">Nisa Nabilah<br>Azaddin</h1>
+        <p class="hero-lede">Data Science and AI undergraduate delivering machine learning solutions across GraphSAGE, NLP pipelines, cloud-native ML systems, dashboards, and automation.</p>
+        <div class="hero-actions">
+          <a class="pill-button primary" href="#projects">View Work</a>
+          <a class="pill-button ghost" href="Nisa-Nabilah-Azaddin-Resume.pdf" target="_blank" rel="noreferrer">Resume PDF</a>
+        </div>
+      </div>
+
+      <div class="hero-metrics reveal" aria-label="Career highlights">
+        <span><strong>0.9857</strong>AUC-PR GraphSAGE AML</span>
+        <span><strong>88%</strong>NLP classification accuracy</span>
+        <span><strong>2025</strong>IEEE ICT4M first author</span>
       </div>
     </section>
 
-    <section id="experience" class="section-shell experience" aria-labelledby="experience-title">
-      <header class="section-heading reveal"><p class="eyebrow"><span>03</span> Experience</p><h2 id="experience-title">From model<br>to momentum.</h2></header>
-      <div class="timeline">
-        <article class="timeline-entry reveal"><div class="timeline-meta"><span>2026</span><time>MAR — SEP</time></div><div><p class="role-type">AI INTERNSHIP</p><h3>AI Intern</h3><p class="company">STDCx · Teraju AI Internship Programme</p><ul><li>Engineered an attendance bot that removed about 3 hours of manual tracking each week for a 20-person cohort.</li><li>Built ClearDesk with SHA-256-sealed audit trails, AI scope-creep analysis and an append-only incident log.</li><li>Stress-tested enterprise AI outputs and translated stakeholder needs across three AI initiatives into technical specifications.</li></ul></div></article>
-        <article class="timeline-entry reveal"><div class="timeline-meta"><span>2025</span><time>JUN — JAN 2026</time></div><div><p class="role-type">MOSTI-FUNDED PROJECT</p><h3>Research Assistant</h3><p class="company">Forthify Tech × OMIS, IIUM</p><ul><li>Developed NLP pipelines with HuggingFace Transformers, reaching 88% held-out classification accuracy.</li><li>Reduced model error by approximately 12% through feature engineering, optimisation and cross-validation.</li><li>Authored benchmarking and system-behaviour documentation for engineering handoff.</li></ul></div></article>
-        <article class="timeline-entry reveal"><div class="timeline-meta"><span>2024</span><time>— 2025</time></div><div><p class="role-type">LEADERSHIP</p><h3>Secretary I</h3><p class="company">Motion-U Startup Incubation Club</p><ul><li>Coordinated events, communications and mentorship support for 30+ student founders each semester.</li></ul></div></article>
+    <section id="about" class="floating-info reveal" aria-labelledby="about-title">
+      <div>
+        <p class="eyebrow dark">Information</p>
+        <h2 id="about-title">Research depth, product-minded delivery.</h2>
+        <p>Proficient across the full data science stack — Python, PyTorch, SQL, PySpark, Power BI, and Google Cloud Platform — with applied work spanning graph neural networks, NLP pipelines, and cloud-native ML systems.</p>
+      </div>
+      <div class="info-graphic" role="img" aria-label="Abstract layered data badge">
+        <span></span><span></span><span></span>
+        <strong>AI</strong>
       </div>
     </section>
 
-    <section id="projects" class="section-shell projects" aria-labelledby="projects-title">
-      <header class="section-heading reveal"><p class="eyebrow"><span>04</span> Selected work</p><h2 id="projects-title">Systems that<br>earn trust.</h2><p class="section-intro">Research, enterprise AI and practical tools built to make complicated work clearer.</p></header>
-      <div class="filter-bar reveal" role="group" aria-label="Filter projects">
-        <button class="filter-button active" data-filter="all" type="button" aria-pressed="true">All <span>08</span></button><button class="filter-button" data-filter="ai" type="button" aria-pressed="false">AI & Data <span>05</span></button><button class="filter-button" data-filter="automation" type="button" aria-pressed="false">Automation <span>03</span></button><button class="filter-button" data-filter="web" type="button" aria-pressed="false">Web Apps <span>03</span></button>
+    <section id="skills" class="section-block" aria-labelledby="skills-title">
+      <div class="section-title reveal">
+        <h2 id="skills-title">What I build</h2>
+        <div class="mini-graphic" aria-hidden="true"><span></span><span></span><span></span></div>
       </div>
-      <div class="project-grid">
-        <article class="project-card feature reveal tick-frame" data-category="ai" data-project="aml"><div class="project-art graph-art" aria-hidden="true"><span></span><span></span><span></span><span></span><strong>0.9857</strong></div><div class="project-content"><p class="project-index">P/01 · AI & DATA</p><h3>AML Detection via Graph Neural Networks</h3><p>GraphSAGE classification of illicit cryptocurrency transactions across 203K nodes and 49 time steps.</p><div class="chips"><span>PYTORCH</span><span>GRAPHSAGE</span><span>GNNEXPLAINER</span></div><button class="text-link open-project" type="button">View case study <span>↗</span></button></div></article>
-        <article class="project-card reveal" data-category="web" data-project="cleardesk"><div class="project-art ledger-art" aria-hidden="true"><span>SCOPE / DECISION / INCIDENT</span><i></i><i></i><i></i></div><div class="project-content"><p class="project-index">P/02 · WEB APP</p><h3>ClearDesk</h3><p>A browser-based workplace documentation system with sealed decisions and an append-only audit trail.</p><div class="chips"><span>VUE.JS</span><span>SUBTLECRYPTO</span><span>WEB STORAGE</span></div><button class="text-link open-project" type="button">View details <span>↗</span></button></div></article>
-        <article class="project-card reveal" data-category="web automation" data-project="portal"><div class="project-art pipeline-art" aria-hidden="true"><b>01</b><i></i><b>03</b><i></i><b>06</b></div><div class="project-content"><p class="project-index">P/03 · WEB + AUTOMATION</p><h3>STDC Unified Staff Portal</h3><p>Role-based HR complaint workflow and self-protection ledger in one single-file application.</p><div class="chips"><span>VUE.JS</span><span>RBAC</span><span>SHA-256</span></div><button class="text-link open-project" type="button">View details <span>↗</span></button></div></article>
-        <article class="project-card reveal" data-category="ai automation" data-project="extraction"><div class="project-art document-art" aria-hidden="true"><span>IC</span><span>NAME</span><span>EMAIL</span><strong>OCR</strong></div><div class="project-content"><p class="project-index">P/04 · AI + AUTOMATION</p><h3>Participant Data Extraction</h3><p>Multi-format uploads with AI-assisted field extraction and OCR for training bookings.</p><div class="chips"><span>NODE.JS</span><span>GEMINI API</span><span>OCR</span></div><button class="text-link open-project" type="button">View details <span>↗</span></button></div></article>
-        <article class="project-card reveal" data-category="ai web" data-project="behaviour"><div class="project-art persona-art" aria-hidden="true"><span>A</span><span>B</span><span>C</span><i>SIMULATE</i></div><div class="project-content"><p class="project-index">P/05 · AI + WEB</p><h3>BehaviourAI</h3><p>Persona Builder, conversational simulation and Scenario Analyser powered by Claude.</p><div class="chips"><span>CLAUDE API</span><span>PERSONAS</span><span>UX</span></div><button class="text-link open-project" type="button">View details <span>↗</span></button></div></article>
-        <article class="project-card reveal" data-category="automation" data-project="telegram"><div class="project-art bot-art" aria-hidden="true"><strong>08:57</strong><span>CLOCK IN ✓</span><i>20 STAFF</i></div><div class="project-content"><p class="project-index">P/06 · AUTOMATION</p><h3>Telegram Attendance Bot</h3><p>Location-aware attendance, leave requests, reminders, multi-admin tools and Excel export.</p><div class="chips"><span>PYTHON</span><span>GSPREAD</span><span>KOYEB</span></div><button class="text-link open-project" type="button">View details <span>↗</span></button></div></article>
-        <article class="project-card reveal" data-category="ai" data-project="lung"><div class="project-art scan-art" aria-hidden="true"><span></span><i>CT / BIOMARKERS</i></div><div class="project-content"><p class="project-index">P/07 · RESEARCH</p><h3>Lung Cancer Prognosis</h3><p>Multi-stage deep learning for quantitative imaging biomarkers and treatment stratification.</p><div class="chips"><span>PYTORCH</span><span>DICOM</span><span>MULTI-MODAL</span></div><button class="text-link open-project" type="button">View details <span>↗</span></button></div></article>
-        <article class="project-card reveal" data-category="ai" data-project="finance"><div class="project-art chart-art" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><span>100K+</span></div><div class="project-content"><p class="project-index">P/08 · ANALYTICS</p><h3>Financial Transaction Analytics</h3><p>Interactive reporting for spending patterns, refund anomalies and merchant trends.</p><div class="chips"><span>SQL</span><span>POWER BI</span><span>EXCEL</span></div><button class="text-link open-project" type="button">View details <span>↗</span></button></div></article>
+      <div class="skill-cloud reveal" aria-label="Technical skills">
+        <span>Python</span><span>SQL</span><span>R</span><span>Java</span><span>HTML</span><span>CSS</span><span>C</span>
+        <span>PyTorch</span><span>PyTorch Geometric</span><span>GraphSAGE</span><span>Scikit-learn</span>
+        <span>HuggingFace Transformers</span><span>NLP</span><span>Feature Engineering</span>
+        <span>BigQuery</span><span>PySpark</span><span>Vertex AI</span><span>Git/GitHub</span>
+        <span>Streamlit</span><span>Power BI</span><span>Looker Studio</span><span>EDA</span><span>Statistical Analysis</span>
       </div>
     </section>
 
-    <section id="learning" class="section-shell learning" aria-labelledby="learning-title">
-      <header class="section-heading reveal"><p class="eyebrow"><span>05</span> Credentials</p><h2 id="learning-title">Always<br>in beta.</h2></header>
-      <div class="credential-list reveal"><article><span>01</span><div><h3>CompTIA Data+ ce</h3><p>DA0-001 · Data concepts, analysis and governance</p></div><b>COMPLETED</b></article><article><span>02</span><div><h3>Google Cloud Skills Boost</h3><p>BigQuery · Looker Studio · Vertex AI · Cloud Security</p></div><b>PATHWAYS</b></article><article><span>03</span><div><h3>CCNA: Introduction to Networks</h3><p>Cisco · Network architecture and fundamentals</p></div><b>COMPLETED</b></article><article><span>04</span><div><h3>IEEE ICT4M 2025</h3><p>First-author publication · Lung cancer prognosis</p></div><b>PUBLISHED</b></article></div>
-      <div class="publication reveal"><p class="eyebrow">Publication / 2025</p><blockquote>“Quantitative Imaging Biomarkers for Prognosis Prediction and Treatment Stratification in Lung Cancer Through a Multi-Stage Deep Learning Approach.”</blockquote><p>Nisa Nabilah Azaddin et al. · IEEE ICT4M 2025 · First Author</p></div>
+    <section id="experience" class="section-block" aria-labelledby="experience-title">
+      <div class="section-title reveal">
+        <h2 id="experience-title">Experience</h2>
+        <div class="mini-graphic waveform" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+      </div>
+      <div class="experience-list">
+        <article class="experience-card reveal">
+          <p class="date">2026 — Present</p>
+          <h3>AI Intern</h3>
+          <p class="org">STDCx · Teraju AI Internship Programme</p>
+          <ul>
+            <li>Built ClearDesk with SHA-256-sealed audit trails, AI-powered scope-creep detection, and append-only incident logging.</li>
+            <li>Engineered a Telegram-integrated attendance system synced with Google Sheets, eliminating ~3 hours/week of manual tracking across a 20-person cohort.</li>
+            <li>Served as technical liaison across attendance automation, document intelligence, and model monitoring initiatives.</li>
+          </ul>
+        </article>
+        <article class="experience-card reveal">
+          <p class="date">2025</p>
+          <h3>Research Assistant</h3>
+          <p class="org">MOSTI-Funded Enterprise AI Project · Forthify Tech (OMIS, IIUM)</p>
+          <ul>
+            <li>Built NLP pipelines for tokenisation, NER, and text classification using Python and HuggingFace Transformers, achieving 88% classification accuracy.</li>
+            <li>Reduced model error rate by ~12% through feature engineering, hyperparameter optimisation, and cross-validation.</li>
+            <li>Translated stakeholder requirements into AI deployment specifications and system behaviour documentation for engineering handoff.</li>
+          </ul>
+        </article>
+        <article class="experience-card reveal">
+          <p class="date">2025</p>
+          <h3>Personal Assistant / Scheduling Coordinator</h3>
+          <p class="org">Multi-venture founder support</p>
+          <ul>
+            <li>Managed end-to-end scheduling for a founder balancing a startup, full-time studies, tutoring, and community leadership.</li>
+            <li>Eliminated scheduling conflicts across five concurrent high-stakes commitments.</li>
+          </ul>
+        </article>
+        <article class="experience-card reveal">
+          <p class="date">2023 — 2025</p>
+          <h3>Freelance Brand Promoter & Event Crew</h3>
+          <p class="org">GPR · Dutch Lady · Yobick · MATTA</p>
+          <ul>
+            <li>Represented four national brands as frontline talent across live activations and campaigns.</li>
+          </ul>
+        </article>
+        <article class="experience-card reveal">
+          <p class="date">2021</p>
+          <h3>Senior Sales Assistant</h3>
+          <p class="org">AS Watson</p>
+          <ul>
+            <li>Consistently exceeded sales KPIs while independently managing customer service, merchandising, and stocktaking duties.</li>
+          </ul>
+        </article>
+      </div>
     </section>
 
-    <section id="contact" class="section-shell contact" aria-labelledby="contact-title">
-      <div class="contact-copy reveal"><p class="eyebrow"><span>06</span> Get in touch</p><h2 id="contact-title">Let’s make data<br><em>do something.</em></h2><p>I’m open to data science, machine-learning and AI engineering opportunities where rigorous thinking meets real-world usefulness.</p><a class="email-link" href="mailto:nisanabilahwork25@gmail.com">nisanabilahwork25@gmail.com <span>↗</span></a></div>
-      <form id="contact-form" class="contact-form reveal"><label>Name<input name="name" type="text" autocomplete="name" required placeholder="Your name"></label><label>Email<input name="email" type="email" autocomplete="email" required placeholder="you@example.com"></label><label>Message<textarea name="message" rows="5" required placeholder="Tell me about the opportunity..."></textarea></label><button class="button primary" type="submit">Compose message <span>↗</span></button><p class="form-note" aria-live="polite">Opens your default email app. No data is stored.</p></form>
+    <section id="projects" class="section-block projects-section" aria-labelledby="projects-title">
+      <div class="section-title reveal">
+        <h2 id="projects-title">Projects</h2>
+        <div class="mini-graphic nodes" aria-hidden="true"><span></span><span></span><span></span><i></i></div>
+      </div>
+      <div class="project-row" aria-label="Selected projects">
+        <article class="project-card reveal" data-project="aml"><div class="project-art graph-art" aria-hidden="true"><span></span><span></span><span></span><strong>0.9857</strong></div><h3>AML Detection via Graph Neural Networks</h3><p>GraphSAGE AML project on the Elliptic Bitcoin Dataset.</p><div class="tags"><span>Python</span><span>GraphSAGE</span><span>PyVis</span></div><button type="button" class="card-button">Details</button></article>
+        <article class="project-card reveal" data-project="lung"><div class="project-art imaging-art" aria-hidden="true"><span></span><i>CT</i></div><h3>Lung Cancer Prognosis Pipeline</h3><p>Published medical imaging pipeline for prognosis prediction.</p><div class="tags"><span>PyTorch</span><span>CNN</span><span>DICOM</span></div><button type="button" class="card-button">Details</button></article>
+        <article class="project-card reveal" data-project="cleardesk"><div class="project-art ledger-art" aria-hidden="true"><span></span><span></span><span></span><b>SHA</b></div><h3>ClearDesk</h3><p>Standalone workplace protection tool built at STDCx.</p><div class="tags"><span>HTML/CSS/JS</span><span>SHA-256</span></div><button type="button" class="card-button">Details</button></article>
+        <article class="project-card reveal" data-project="stdc-portal"><div class="project-art sequence-art" aria-hidden="true"><span>HR</span><i></i><span>RBAC</span></div><h3>STDC HR Portal</h3><p>Role-based internal complaint management system.</p><div class="tags"><span>Node.js</span><span>Express</span><span>SQLite</span></div><button type="button" class="card-button">Details</button></article>
+        <article class="project-card reveal" data-project="second-brain"><div class="project-art nlp-art" aria-hidden="true"><span>CAP</span><i></i><span>MEM</span></div><h3>Connect With Second Brain</h3><p>AI-powered personal knowledge management system.</p><div class="tags"><span>Firebase</span><span>Gemini API</span></div><button type="button" class="card-button">Details</button></article>
+        <article class="project-card reveal" data-project="telegram"><div class="project-art pulse-art" aria-hidden="true"><span></span><span></span><span></span></div><h3>Telegram Attendance Bot</h3><p>Attendance automation integrated with Google Sheets.</p><div class="tags"><span>Python</span><span>Telegram API</span></div><button type="button" class="card-button">Details</button></article>
+        <article class="project-card reveal" data-project="code-switch"><div class="project-art nlp-art" aria-hidden="true"><span>EN</span><i></i><span>BM</span></div><h3>Code-Switch NLP Classifier</h3><p>Malaysian English–Malay code-switching detection.</p><div class="tags"><span>mBERT</span><span>HuggingFace</span></div><button type="button" class="card-button">Details</button></article>
+        <article class="project-card reveal" data-project="moodify"><div class="project-art weather-art" aria-hidden="true"><span></span><i></i><b>♪</b></div><h3>Moodify</h3><p>Weather-based music recommendation engine.</p><div class="tags"><span>Spotify API</span><span>Random Forest</span></div><button type="button" class="card-button">Details</button></article>
+        <article class="project-card reveal" data-project="diabetes"><div class="project-art pulse-art" aria-hidden="true"><span></span><span></span><span></span></div><h3>Diabetes Prediction Model</h3><p>Random Forest healthcare risk classification model.</p><div class="tags"><span>Scikit-learn</span><span>Random Forest</span></div><button type="button" class="card-button">Details</button></article>
+        <article class="project-card reveal" data-project="xray"><div class="project-art xray-art" aria-hidden="true"><span></span><i></i></div><h3>X-Ray Deep Learning Classifier</h3><p>Deep learning classifier for diagnostic X-ray imaging.</p><div class="tags"><span>PyTorch</span><span>Deep Learning</span></div><button type="button" class="card-button">Details</button></article>
+        <article class="project-card reveal" data-project="birds"><div class="project-art migration-art" aria-hidden="true"><i></i><i></i><i></i></div><h3>Bird Migration Analysis</h3><p>Geospatial and time-series movement analysis.</p><div class="tags"><span>Pandas</span><span>Visualization</span></div><button type="button" class="card-button">Details</button></article>
+        <article class="project-card reveal" data-project="nn-fundamentals"><div class="project-art matrix-art" aria-hidden="true"><span></span><span></span><span></span><span></span></div><h3>Neural Network Fundamentals</h3><p>Hands-on neural network modeling with Scikit-learn.</p><div class="tags"><span>Python</span><span>Scikit-learn</span></div><button type="button" class="card-button">Details</button></article>
+        <article class="project-card reveal" data-project="viterbi"><div class="project-art sequence-art" aria-hidden="true"><span>π</span><i></i><span>δ</span></div><h3>Viterbi Algorithm</h3><p>Dynamic programming for optimal sequence decoding.</p><div class="tags"><span>Python</span><span>HMM</span></div><button type="button" class="card-button">Details</button></article>
+        <article class="project-card reveal" data-project="eda"><div class="project-art eda-art" aria-hidden="true"><span></span><span></span><span></span><span></span></div><h3>EDA Engine</h3><p>Reusable exploratory data analysis automation tool.</p><div class="tags"><span>Pandas</span><span>Visualization</span></div><button type="button" class="card-button">Details</button></article>
+        <article class="project-card reveal" data-project="sales"><div class="project-art sales-art" aria-hidden="true"><span></span><span></span><span></span><b>Σ</b></div><h3>Ad-Hoc Sales Analysis</h3><p>Independent sales computation for a stakeholder.</p><div class="tags"><span>Python</span><span>Pandas</span></div><button type="button" class="card-button">Details</button></article>
+        <article class="project-card reveal" data-project="finance"><div class="project-art sales-art" aria-hidden="true"><span></span><span></span><span></span><b>100K</b></div><h3>Financial Transaction Analytics Dashboard</h3><p>Power BI dashboards for 100K+ transaction records.</p><div class="tags"><span>SQL</span><span>Excel</span><span>Power BI</span></div><button type="button" class="card-button">Details</button></article>
+      </div>
+    </section>
+
+    <section id="exploring" class="contrast-panel reveal" aria-labelledby="exploring-title">
+      <div class="contrast-art" role="img" aria-label="Abstract current lines flowing through data nodes">
+        <span></span><span></span><span></span><i></i>
+      </div>
+      <div>
+        <p class="eyebrow">What I'm exploring</p>
+        <h2 id="exploring-title">Measurable, explainable, useful AI systems.</h2>
+        <p>I’m focused on applied ML where research quality, stakeholder trust, and product usability meet — graph intelligence, multilingual NLP, document AI, and decision-support systems.</p>
+      </div>
+    </section>
+
+    <section id="learning" class="section-block learning-section" aria-labelledby="learning-title">
+      <div class="section-title reveal">
+        <h2 id="learning-title">More</h2>
+        <div class="mini-graphic badge-line" aria-hidden="true"><span></span><span></span><span></span></div>
+      </div>
+      <div class="more-grid">
+        <article class="more-card reveal"><div class="badge-block">II</div><div><h3>IIUM Computer Science</h3><p>Bachelor in Computer Science (Honours), Data Science and Artificial Intelligence. CGPA 3.40/4.00. Expected 2026. Dean's List: 3 semesters.</p><span class="mini-pill">Education</span></div></article>
+        <article class="more-card reveal"><div class="badge-block">IEEE</div><div><h3>IEEE ICT4M 2025</h3><p>First-author publication: Quantitative Imaging Biomarkers for Prognosis Prediction and Treatment Stratification in Lung Cancer.</p><span class="mini-pill">Publication</span></div></article>
+        <article class="more-card reveal"><div class="badge-block">GC</div><div><h3>Google Cloud Skills Badges</h3><p>BigQuery, Looker Studio, Vertex AI, and Cloud Security.</p><span class="mini-pill">Certification</span></div></article>
+        <article class="more-card reveal"><div class="badge-block">D+</div><div><h3>CompTIA Data+ ce</h3><p>DA0-001 certification covering data concepts, analysis, visualization, and governance.</p><span class="mini-pill">Certification</span></div></article>
+        <article class="more-card reveal"><div class="badge-block">NW</div><div><h3>CCNA: Introduction to Networks</h3><p>Cisco training in network architecture, protocols, and foundational infrastructure.</p><span class="mini-pill">Certification</span></div></article>
+        <article class="more-card reveal"><div class="badge-block">CD</div><div><h3>Professional Development</h3><p>CelcomDigi SiswaPreneur Bootcamp 2023 and Celcom Siswapreneur @ Google Bootcamp 2022.</p><span class="mini-pill">Bootcamps</span></div></article>
+      </div>
+    </section>
+
+    <section class="section-block leadership" aria-labelledby="leadership-title">
+      <div class="section-title reveal">
+        <h2 id="leadership-title">Leadership</h2>
+        <div class="mini-graphic nodes" aria-hidden="true"><span></span><span></span><span></span><i></i></div>
+      </div>
+      <div class="leadership-card reveal">
+        <p class="date">2022 — 2025</p>
+        <h3>Secretary I / Core Organizing Committee · Motion-U Startup Incubation Club</h3>
+        <p>Revived a defunct student club into an active entrepreneurship platform, pioneered the MotionU Award, and led three consecutive years as Main Chair while organizing 5+ initiatives engaging 70+ members and external industry partners.</p>
+      </div>
+      <div class="leadership-card reveal">
+        <p class="date">Volunteer Support</p>
+        <h3>MyHackathon · Anonymity 101 Cybersecurity Talk</h3>
+        <p>Supported logistics for a national-level hackathon by Cradle Fund and MOSTI, plus a cybersecurity awareness session by ICE covering Tor, VPN, and proxy fundamentals.</p>
+      </div>
+    </section>
+
+    <section id="contact" class="footer-band" aria-labelledby="contact-title">
+      <div class="footer-card reveal">
+        <div>
+          <p class="eyebrow">Contact</p>
+          <h2 id="contact-title">Let’s make data make sense.</h2>
+          <p>Open to data science, machine learning, AI engineering, and analytics roles.</p>
+        </div>
+        <div class="contact-links" aria-label="Contact links">
+          <a class="pill-button primary" href="mailto:nisanabilahwork25@gmail.com">Email</a>
+          <a class="pill-button ghost light" href="https://www.linkedin.com/in/nisa-nabilah-azaddin-394b0b20a/" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a class="pill-button ghost light" href="https://github.com/NisaNabilah" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="pill-button ghost light" href="Nisa-Nabilah-Azaddin-Resume.pdf" target="_blank" rel="noreferrer">Resume PDF</a>
+        </div>
+      </div>
+      <footer class="site-footer">
+        <p><strong>Nisa Nabilah Azaddin</strong><br>Data Science & AI Undergraduate</p>
+        <p>Kuala Lumpur, Malaysia<br>Expected graduation: 2026</p>
+        <p>Built with vanilla HTML, CSS, and JavaScript.<br>No frameworks. No personal photos.</p>
+        <a href="#home" aria-label="Back to top">↑</a>
+      </footer>
     </section>
   </main>
 
-  <footer class="site-footer"><a class="brand footer-brand" href="#home"><span class="brand-mark">NN</span><span>NISA / AI</span></a><p>Designed & built with vanilla HTML, CSS + JS.</p><div><a href="https://www.linkedin.com/in/nisa-nabilah-azaddin-394b0b20a/" target="_blank" rel="noreferrer">LinkedIn ↗</a><a href="https://github.com/NisaNabilah" target="_blank" rel="noreferrer">GitHub ↗</a></div><a class="back-top" href="#home" aria-label="Back to top">↑</a></footer>
-
-  <dialog class="project-modal" aria-labelledby="modal-title"><button class="modal-close icon-button" type="button" aria-label="Close project details">×</button><p id="modal-label" class="eyebrow"></p><h2 id="modal-title"></h2><p id="modal-summary" class="modal-summary"></p><div class="modal-grid"><div><h3>The brief</h3><p id="modal-brief"></p></div><div><h3>What I built</h3><p id="modal-built"></p></div></div><div id="modal-chips" class="chips"></div></dialog>
+  <dialog class="project-modal" aria-labelledby="modal-title">
+    <button class="modal-close" type="button" aria-label="Close project details">×</button>
+    <p id="modal-label" class="eyebrow dark"></p>
+    <h2 id="modal-title"></h2>
+    <p id="modal-summary" class="modal-summary"></p>
+    <div class="modal-grid">
+      <div><h3>Role / Focus</h3><p id="modal-role"></p></div>
+      <div><h3>What it demonstrates</h3><p id="modal-impact"></p></div>
+    </div>
+    <div id="modal-tags" class="tags modal-tags"></div>
+  </dialog>
 </body>
 </html>

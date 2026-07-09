@@ -1,102 +1,213 @@
 /*
-  Page behaviour: navigation, theme persistence, reveal observer, project filters,
-  accessible project detail dialog, and a mailto contact-form fallback.
+  Portfolio v3 behaviour: mobile navigation, active-section highlighting,
+  IntersectionObserver reveal animations, and accessible expandable project
+  details through a native dialog. Vanilla JavaScript only.
 */
-const root = document.documentElement;
-const themeButton = document.querySelector('.theme-toggle');
-const metaTheme = document.querySelector('meta[name="theme-color"]');
-const savedTheme = localStorage.getItem('nisa-theme');
-const initialTheme = savedTheme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 
-function setTheme(theme) {
-  root.dataset.theme = theme;
-  themeButton.setAttribute('aria-label', `Switch to ${theme === 'light' ? 'dark' : 'light'} mode`);
-  metaTheme.content = theme === 'light' ? '#FFF4EB' : '#3D1534';
-}
-setTheme(initialTheme);
-themeButton.addEventListener('click', () => {
-  const next = root.dataset.theme === 'light' ? 'dark' : 'light';
-  setTheme(next);
-  localStorage.setItem('nisa-theme', next);
-});
-
-const menuButton = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.site-nav');
-menuButton.addEventListener('click', () => {
-  const open = nav.classList.toggle('open');
-  menuButton.setAttribute('aria-expanded', open);
-  menuButton.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+const menuToggle = document.querySelector('.menu-toggle');
+const navLinks = [...document.querySelectorAll('.site-nav a')];
+const sections = [...document.querySelectorAll('main section[id]')];
+
+menuToggle.addEventListener('click', () => {
+  const isOpen = nav.classList.toggle('open');
+  menuToggle.setAttribute('aria-expanded', String(isOpen));
+  menuToggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
 });
+
 nav.addEventListener('click', event => {
-  if (event.target.matches('a')) { nav.classList.remove('open'); menuButton.setAttribute('aria-expanded', 'false'); }
+  if (event.target.matches('a')) {
+    nav.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.setAttribute('aria-label', 'Open navigation');
+  }
 });
+
 document.addEventListener('keydown', event => {
   if (event.key === 'Escape' && nav.classList.contains('open')) {
     nav.classList.remove('open');
-    menuButton.setAttribute('aria-expanded', 'false');
-    menuButton.setAttribute('aria-label', 'Open navigation');
-    menuButton.focus();
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.setAttribute('aria-label', 'Open navigation');
+    menuToggle.focus();
   }
 });
 
 const revealObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObserver.unobserve(entry.target); } });
-}, { threshold: .08, rootMargin: '0px 0px -35px' });
-document.querySelectorAll('.reveal').forEach(item => revealObserver.observe(item));
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px' });
 
-const sections = [...document.querySelectorAll('main section[id]')];
-const navLinks = [...document.querySelectorAll('.site-nav a')];
+document.querySelectorAll('.reveal').forEach(element => revealObserver.observe(element));
+
 const sectionObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
-    if (entry.isIntersecting) navLinks.forEach(link => link.classList.toggle('active', link.hash === `#${entry.target.id}`));
+    if (!entry.isIntersecting) return;
+    navLinks.forEach(link => {
+      link.classList.toggle('active', link.hash === `#${entry.target.id}`);
+    });
   });
-}, { rootMargin: '-25% 0px -65%', threshold: 0 });
+}, { rootMargin: '-30% 0px -58% 0px', threshold: 0 });
+
 sections.forEach(section => sectionObserver.observe(section));
 
-const filterButtons = document.querySelectorAll('.filter-button');
-const projectCards = document.querySelectorAll('.project-card');
-filterButtons.forEach(button => button.addEventListener('click', () => {
-  const filter = button.dataset.filter;
-  filterButtons.forEach(item => {
-    const selected = item === button;
-    item.classList.toggle('active', selected);
-    item.setAttribute('aria-pressed', selected);
-  });
-  projectCards.forEach(card => {
-    const match = filter === 'all' || card.dataset.category.split(' ').includes(filter);
-    card.hidden = !match;
-    if (match) requestAnimationFrame(() => card.classList.add('visible'));
-  });
-}));
-
-const projectData = {
-  aml:{label:'P/01 · AI & DATA',title:'AML Detection via Graph Neural Networks',summary:'An explainable graph-learning system for identifying illicit cryptocurrency transactions in the Elliptic Bitcoin network.',brief:'Classify highly imbalanced, time-dependent transaction data while preserving enough interpretability for investigators to understand why a transaction was flagged.',built:'Trained GraphSAGE on 203K nodes and 234K edges, achieving test F1 0.7845 and AUC-PR 0.9857. Analysed stability across all 49 time steps, added GNNExplainer subgraph insights, and built a Streamlit/PyVis exploration dashboard.',chips:['Python','PyTorch Geometric','GraphSAGE','GNNExplainer','Streamlit','PyVis']},
-  cleardesk:{label:'P/02 · WEB APP',title:'ClearDesk',summary:'A calm, browser-based system that helps employees document boundaries, decisions and incidents.',brief:'Create a privacy-minded workplace record without requiring a backend, while protecting the integrity of past entries.',built:'Designed Scope Guard, Decision Sign-offs, Incident Log and an append-only audit trail. SHA-256 seals via SubtleCrypto reveal tampering; Web Storage keeps the tool portable, with light and dark modes.',chips:['Vue.js','Tailwind CSS','SubtleCrypto API','Web Storage API']},
-  portal:{label:'P/03 · WEB + AUTOMATION',title:'STDC Unified Staff Portal',summary:'A single-file portal joining a formal HR complaint workflow with a self-protection ledger.',brief:'Make a six-stage Bahasa Malaysia complaint process understandable to staff while giving HR Officers and Managers the right controls at each stage.',built:'Implemented staff, HR Officer and HR Manager access; six complaint states; decision records; and SHA-256 digital seals in a portable Vue application.',chips:['Vue.js','Role-based access','SHA-256','Bahasa Malaysia']},
-  extraction:{label:'P/04 · DOCUMENT AI',title:'Participant Data Extraction Module',summary:'AI-assisted intake that turns mixed-format participant documents into structured booking data.',brief:'Reduce repetitive typing and errors when names, identity numbers and emails arrive across inconsistent documents and scans.',built:'Created multi-format upload and OCR flows, a Node.js/Express backend proxy, and Gemini API integration to extract and review name, IC/passport and email fields.',chips:['Node.js','Express','Gemini API','OCR','REST API']},
-  behaviour:{label:'P/05 · AI PROTOTYPE',title:'AI Human Behaviour Simulator',summary:'A modular tool for creating personas, simulating conversations and examining behavioural scenarios.',brief:'Give users a structured way to test how different personas may respond to the same prompt or situation.',built:'Developed Persona Builder & Chat and Scenario Analyser modules with Claude API integration, plus a system architecture view and interactive technology explorer.',chips:['Claude API','Persona systems','Prompt design','Interactive architecture']},
-  telegram:{label:'P/06 · AUTOMATION',title:'Telegram Intern Attendance Bot',summary:'A chat-first attendance workflow built around the tool interns and administrators already use.',brief:'Replace fragmented manual tracking for a 20-person cohort without adding a new app or complicated training.',built:'Added location-based clock-in/out, leave requests, daily reminders, multi-admin controls and Excel export. Integrated Google Sheets and deployed the Python service on Koyeb, saving about three hours weekly.',chips:['Python','python-telegram-bot','gspread','Koyeb','openpyxl']},
-  lung:{label:'P/07 · PUBLISHED RESEARCH',title:'Lung Cancer Prognosis Prediction',summary:'A multi-stage deep-learning approach to imaging biomarkers, prognosis and treatment stratification.',brief:'Translate rich CT imaging into quantitative signals that can support prognosis research and treatment planning.',built:'Designed a multi-modal pipeline for DICOM imaging and quantitative biomarker extraction. Published and presented the work as first author at IEEE ICT4M 2025.',chips:['Python','PyTorch','DICOM','Multi-modal fusion','Deep learning']},
-  finance:{label:'P/08 · ANALYTICS',title:'Financial Transaction Analytics',summary:'Operational dashboards that make patterns and anomalies in large transaction datasets visible.',brief:'Help a client monitor customer spending, refund anomalies and merchant-category performance without repeated manual analysis.',built:'Queried and analysed more than 100,000 records using SQL and Excel, then delivered interactive Power BI dashboards adopted for ongoing monitoring and reporting.',chips:['SQL','Excel','Power BI','Data visualisation']}
+const projects = {
+  aml: {
+    label: 'Self-initiated internship project',
+    title: 'AML Detection via Graph Neural Networks',
+    summary: 'GraphSAGE on the Elliptic Bitcoin Dataset with 203K nodes and 234K edges, achieving Test F1 0.7845 and AUC-PR 0.9857.',
+    role: 'Built the AML graph-learning pipeline with Streamlit + PyVis dashboarding, GNNExplainer interpretability, and temporal analysis across 49 time steps.',
+    impact: 'Surpassed the Weber et al. benchmark of 0.88 AUC-PR and demonstrates applied graph ML, explainability, and research-grade evaluation.',
+    tags: ['Python', 'PyTorch Geometric', 'GraphSAGE', 'GNNExplainer', 'Streamlit', 'PyVis']
+  },
+  lung: {
+    label: 'Research / IEEE paper',
+    title: 'Lung Cancer Prognosis Prediction Pipeline',
+    summary: 'Multi-stage deep learning pipeline extracting quantitative imaging biomarkers from CT/histology imaging for prognosis prediction and treatment stratification.',
+    role: 'Developed the medical imaging pipeline and translated the experimental workflow into a peer-reviewed research contribution.',
+    impact: 'Published at IEEE ICT4M 2025 as first author; modular late-fusion extension submitted to ICAIIA 2026.',
+    tags: ['Python', 'PyTorch', 'CNN', 'DICOM imaging']
+  },
+  cleardesk: {
+    label: 'Built at STDCx for a supervisor',
+    title: 'ClearDesk',
+    summary: 'Standalone browser-based workplace protection tool with SHA-256-sealed decision audit trails, AI-powered scope-creep analysis, and append-only incident logging.',
+    role: 'Designed and built the browser tool as a practical workplace documentation system.',
+    impact: 'Shows enterprise-facing prototyping, integrity-focused audit design, and supervisor-driven utility.',
+    tags: ['HTML', 'CSS', 'JavaScript', 'SHA-256']
+  },
+  'stdc-portal': {
+    label: 'Full-stack internship project',
+    title: 'STDC HR Portal',
+    summary: 'Role-based internal staff complaint management system with a high-fidelity HTML prototype completed and Node/Express + SQLite backend planned.',
+    role: 'Mapped the complaint workflow, role access needs, and prototype interface for internal staff use.',
+    impact: 'Demonstrates workflow design, role-based access planning, and transition from prototype to backend architecture.',
+    tags: ['HTML', 'CSS', 'JavaScript', 'Node.js', 'Express', 'SQLite']
+  },
+  'second-brain': {
+    label: 'Side project',
+    title: 'Connect With Second Brain',
+    summary: 'AI-powered personal knowledge management system using Firebase + Gemini API with Capture, Memory, and Connection layers.',
+    role: 'Designed the three-layer architecture for capturing notes, storing memory, and connecting related ideas.',
+    impact: 'Explores practical AI assistance for personal context, idea retrieval, and knowledge synthesis.',
+    tags: ['Firebase', 'Gemini API']
+  },
+  telegram: {
+    label: 'Built at STDCx',
+    title: 'Telegram Attendance Bot',
+    summary: 'Automated intern attendance system integrated with Google Sheets, eliminating ~3 hours/week of manual tracking across a 20-person cohort.',
+    role: 'Built the Telegram workflow and Sheets integration for intern attendance tracking.',
+    impact: 'Turns a repetitive admin process into a lightweight, chat-first automation that fits the team’s existing workflow.',
+    tags: ['Python', 'Telegram API', 'Google Sheets API']
+  },
+  'code-switch': {
+    label: 'Malaysian English–Malay NLP',
+    title: 'Code-Switch NLP Classifier',
+    summary: 'Code-switching detector built from a synthetic dataset that captures authentic bilingual Malaysian English–Malay patterns.',
+    role: 'Benchmarked TF-IDF + Logistic Regression, TF-IDF + SVM, and fine-tuned mBERT.',
+    impact: 'mBERT consistently outperformed classical baselines, showing applied cross-lingual modeling for an underrepresented NLP problem.',
+    tags: ['Python', 'Scikit-learn', 'HuggingFace Transformers', 'mBERT']
+  },
+  moodify: {
+    label: 'Recommendation system',
+    title: 'Moodify — Weather-Based Music Recommendation Engine',
+    summary: 'End-to-end recommendation system predicting real-time weather with a Random Forest classifier and mapping weather conditions to mood-based genres.',
+    role: 'Integrated Spotify API data, OpenWeatherMap data, and fuzzy matching for more robust user input.',
+    impact: 'Demonstrates product-minded ML with live APIs, recommendation logic, and user-facing interaction.',
+    tags: ['Python', 'Scikit-learn', 'Spotify API', 'OpenWeatherMap API']
+  },
+  diabetes: {
+    label: 'Healthcare classification',
+    title: 'Diabetes Prediction Model',
+    summary: 'Random Forest classification model predicting diabetes risk from patient health indicators.',
+    role: 'Applied feature engineering and model evaluation best practices to a healthcare prediction workflow.',
+    impact: 'Shows reproducible classification methodology and practical health-data modeling.',
+    tags: ['Python', 'Scikit-learn', 'Random Forest']
+  },
+  xray: {
+    label: 'Medical imaging classification',
+    title: 'X-Ray Deep Learning Classifier',
+    summary: 'Deep learning image classification model for X-ray diagnostic imaging.',
+    role: 'Applied convolutional architectures to a medical imaging domain distinct from the lung cancer research track.',
+    impact: 'Broadens applied imaging experience across CT, histology, and X-ray modalities.',
+    tags: ['Python', 'PyTorch', 'Deep Learning']
+  },
+  birds: {
+    label: 'Geospatial & time-series analysis',
+    title: 'Bird Migration Analysis',
+    summary: 'Exploratory analysis of bird migration patterns using geospatial and time-series techniques.',
+    role: 'Wrangled movement data and visualized migration patterns to uncover trends.',
+    impact: 'Shows ability to turn raw tracking data into interpretable movement insights.',
+    tags: ['Python', 'Pandas', 'Data Visualization']
+  },
+  'nn-fundamentals': {
+    label: 'Applied neural network modeling',
+    title: 'Neural Network Fundamentals with Scikit-learn',
+    summary: 'Implemented neural network architectures from foundational principles using Scikit-learn.',
+    role: 'Reinforced core deep learning theory through hands-on model construction.',
+    impact: 'Demonstrates conceptual fluency, not just library-level usage.',
+    tags: ['Python', 'Scikit-learn']
+  },
+  viterbi: {
+    label: 'Sequence modeling & dynamic programming',
+    title: 'Viterbi Algorithm Implementation',
+    summary: 'Implementation of the Viterbi algorithm for optimal sequence decoding in probabilistic sequence models.',
+    role: 'Applied dynamic programming to Hidden Markov Model-style decoding relevant to NLP tagging tasks.',
+    impact: 'Shows mathematical grounding for sequence modeling and NLP systems.',
+    tags: ['Python']
+  },
+  eda: {
+    label: 'Reusable data tooling',
+    title: 'EDA Engine',
+    summary: 'Reusable exploratory data analysis tool for automated data profiling, distribution analysis, and visualization.',
+    role: 'Built a standardized EDA workflow to reduce repetitive setup across datasets.',
+    impact: 'Improves speed and consistency in early-stage data understanding.',
+    tags: ['Python', 'Pandas', 'Data Visualization']
+  },
+  sales: {
+    label: 'Independent stakeholder analysis',
+    title: 'Ad-Hoc Data Analysis — Sales Computation',
+    summary: 'Independent sales data computation and analysis for an external stakeholder.',
+    role: 'Applied data cleaning and aggregation techniques to deliver actionable business figures.',
+    impact: 'Demonstrates practical, stakeholder-facing analysis under real-world constraints.',
+    tags: ['Python', 'Pandas']
+  },
+  finance: {
+    label: 'Analytics dashboard',
+    title: 'Financial Transaction Analytics Dashboard',
+    summary: '100K+ transaction records analysed in SQL and Excel with interactive Power BI dashboards.',
+    role: 'Built dashboards for spending patterns, refund trends, and merchant category insights.',
+    impact: 'Shows analytics delivery from raw transaction data to usable monitoring and reporting.',
+    tags: ['SQL', 'Excel', 'Power BI']
+  }
 };
-const modal = document.querySelector('.project-modal');
-document.querySelectorAll('.open-project').forEach(button => button.addEventListener('click', () => {
-  const data = projectData[button.closest('.project-card').dataset.project];
-  document.querySelector('#modal-label').textContent = data.label;
-  document.querySelector('#modal-title').textContent = data.title;
-  document.querySelector('#modal-summary').textContent = data.summary;
-  document.querySelector('#modal-brief').textContent = data.brief;
-  document.querySelector('#modal-built').textContent = data.built;
-  document.querySelector('#modal-chips').innerHTML = data.chips.map(chip => `<span>${chip}</span>`).join('');
-  modal.showModal();
-}));
-document.querySelector('.modal-close').addEventListener('click', () => modal.close());
-modal.addEventListener('click', event => { if (event.target === modal) modal.close(); });
 
-document.querySelector('#contact-form').addEventListener('submit', event => {
-  event.preventDefault();
-  const data = new FormData(event.currentTarget);
-  const subject = encodeURIComponent(`Portfolio enquiry from ${data.get('name')}`);
-  const body = encodeURIComponent(`${data.get('message')}\n\nFrom: ${data.get('name')} (${data.get('email')})`);
-  window.location.href = `mailto:nisanabilahwork25@gmail.com?subject=${subject}&body=${body}`;
+const modal = document.querySelector('.project-modal');
+const closeModal = document.querySelector('.modal-close');
+const modalLabel = document.querySelector('#modal-label');
+const modalTitle = document.querySelector('#modal-title');
+const modalSummary = document.querySelector('#modal-summary');
+const modalRole = document.querySelector('#modal-role');
+const modalImpact = document.querySelector('#modal-impact');
+const modalTags = document.querySelector('#modal-tags');
+
+document.querySelectorAll('.project-card').forEach(card => {
+  card.querySelector('.card-button').addEventListener('click', () => {
+    const project = projects[card.dataset.project];
+    modalLabel.textContent = project.label;
+    modalTitle.textContent = project.title;
+    modalSummary.textContent = project.summary;
+    modalRole.textContent = project.role;
+    modalImpact.textContent = project.impact;
+    modalTags.innerHTML = project.tags.map(tag => `<span>${tag}</span>`).join('');
+    modal.showModal();
+  });
+});
+
+closeModal.addEventListener('click', () => modal.close());
+modal.addEventListener('click', event => {
+  if (event.target === modal) modal.close();
 });
